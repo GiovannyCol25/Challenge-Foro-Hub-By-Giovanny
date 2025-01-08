@@ -1,7 +1,7 @@
 package APIREST_FOROHUB.APIREST.dto;
 
 public record DatosActualizarTopico(
-//        Long id,
+        Long id,
         String titulo,
         String mensaje,
 //        LocalDateTime fecha_Creacion,

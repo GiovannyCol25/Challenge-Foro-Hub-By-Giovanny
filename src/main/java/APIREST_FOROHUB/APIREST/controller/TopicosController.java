@@ -1,7 +1,7 @@
 package APIREST_FOROHUB.APIREST.controller;
 
-import APIREST_FOROHUB.APIREST.domain.Topico;
-import APIREST_FOROHUB.APIREST.domain.TopicoRepository;
+import APIREST_FOROHUB.APIREST.domain.topico.Topico;
+import APIREST_FOROHUB.APIREST.domain.topico.TopicoRepository;
 import APIREST_FOROHUB.APIREST.dto.*;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -12,7 +12,9 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.util.Optional;
 
 @RestController
@@ -23,8 +25,19 @@ public class TopicosController {
     private TopicoRepository topicoRepository;
 
     @PostMapping
-    public void registrarTopicos(@RequestBody @Valid DatosRegistroTopicos datosRegistroTopicos) {
-        topicoRepository.save(new Topico(datosRegistroTopicos));
+    public ResponseEntity<DatosConsultaTopico> registrarTopicos(@RequestBody @Valid DatosRegistroTopicos datosRegistroTopicos,
+                                                                UriComponentsBuilder uriComponentsBuilder) {
+        Topico topico = topicoRepository.save(new Topico(datosRegistroTopicos));
+        DatosConsultaTopico datosConsultaTopico = new DatosConsultaTopico(
+                topico.getId(),
+                topico.getTitulo(),
+                topico.getMensaje(),
+                topico.getFecha_Creacion(),
+                topico.getStatus(),
+                topico.getAutor(),
+                topico.getCurso().toString());
+        URI url = uriComponentsBuilder.path("/topicos/{id}").buildAndExpand(topico.getId()).toUri();
+        return ResponseEntity.created(url).body(datosConsultaTopico);
     }
 
     @GetMapping
@@ -63,6 +76,7 @@ public class TopicosController {
         if (optionalTopico.isPresent()) {
             Topico topico = optionalTopico.get();
             var datosTopico = new DatosConsultaTopico(
+                    topico.getId(),
                     topico.getTitulo(),
                     topico.getMensaje(),
                     topico.getFecha_Creacion(),

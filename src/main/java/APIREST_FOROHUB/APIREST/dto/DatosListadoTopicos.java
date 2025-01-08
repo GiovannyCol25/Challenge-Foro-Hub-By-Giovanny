@@ -1,6 +1,6 @@
 package APIREST_FOROHUB.APIREST.dto;
 
-import APIREST_FOROHUB.APIREST.domain.Topico;
+import APIREST_FOROHUB.APIREST.domain.topico.Topico;
 
 import java.time.LocalDateTime;
 

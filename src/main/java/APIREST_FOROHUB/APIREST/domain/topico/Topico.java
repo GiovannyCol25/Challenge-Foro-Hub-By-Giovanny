@@ -1,4 +1,4 @@
-package APIREST_FOROHUB.APIREST.domain;
+package APIREST_FOROHUB.APIREST.domain.topico;
 
 import APIREST_FOROHUB.APIREST.dto.DatosActualizarTopico;
 import APIREST_FOROHUB.APIREST.dto.DatosRegistroTopicos;
