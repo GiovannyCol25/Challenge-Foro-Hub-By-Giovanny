@@ -3,6 +3,8 @@ package APIREST_FOROHUB.APIREST.controller;
 import APIREST_FOROHUB.APIREST.domain.topico.Topico;
 import APIREST_FOROHUB.APIREST.domain.topico.TopicoRepository;
 import APIREST_FOROHUB.APIREST.dto.*;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/topicos")
+@SecurityRequirement(name = "bearer-key")
 public class TopicosController {
 
     @Autowired
